@@ -79,7 +79,33 @@ The Django backend will be running at `http://127.0.0.1:8000/`.
 
 You can access the Django Admin panel at `http://127.0.0.1:8000/admin/` using the superuser credentials you created.
 
-### 9. API Endpoints
+### 9. Deployment on Render
+
+To deploy this Django backend on Render, follow these steps:
+
+**a. Create a `requirements.txt` file:**
+Ensure you have a `requirements.txt` file in your project root (or `smart_donation_backend` directory) with all Python dependencies, including `gunicorn`. A sample `requirements.txt` is provided in `smart_donation_backend/requirements.txt`.
+
+**b. Create an `.env` file:**
+Create a `.env` file in your project root (or `smart_donation_backend` directory) based on the `.env.example` template. Fill in your actual secret key and allowed hosts.
+
+**c. Render Configuration:**
+When setting up your web service on Render, use the following commands:
+
+*   **Build Command:**
+    ```bash
+    pip install -r requirements.txt
+    ```
+*   **Start Command:**
+    ```bash
+    gunicorn smart_donation_backend.wsgi:application --bind 0.0.0.0:$PORT
+    ```
+    Ensure your `Procfile` (if you create one) also specifies this start command.
+
+**d. Environment Variables on Render:**
+Add the environment variables from your `.env` file to your Render service settings.
+
+### 10. API Endpoints
 
 *   **User Registration:** `/api/donor/register/` (POST)
 *   **User Login (JWT):** `/api/donor/login/` (POST)
